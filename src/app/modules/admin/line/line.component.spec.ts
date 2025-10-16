@@ -8,7 +8,7 @@ describe('LineComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LineComponent]
+      imports: [LineComponent]
     });
     fixture = TestBed.createComponent(LineComponent);
     component = fixture.componentInstance;

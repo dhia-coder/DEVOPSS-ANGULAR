@@ -8,7 +8,7 @@ describe('SapComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SapComponent]
+      imports: [SapComponent]
     });
     fixture = TestBed.createComponent(SapComponent);
     component = fixture.componentInstance;
