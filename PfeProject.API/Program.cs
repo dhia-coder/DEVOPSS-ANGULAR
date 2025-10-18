@@ -10,6 +10,7 @@ using PfeProject.Infrastructure.Persistence;
 using PfeProject.Infrastructure.Repositories;
 using PfeProject.API.Middlewares;
 using System.Text;
+using Prometheus;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -129,6 +130,12 @@ builder.Services.AddCors(options =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 
+// ===== 6. Prometheus Metrics Configuration =====
+builder.Services.AddPrometheusCounters();
+builder.Services.AddPrometheusHistograms();
+builder.Services.AddPrometheusGauges();
+builder.Services.AddPrometheusSummaries();
+
 var app = builder.Build();
 
 // ===== 6. Database Migration and Seeding =====
@@ -156,11 +163,17 @@ app.UseHttpsRedirection();
 // 👇 IMPORTANT : CORS doit être avant Authentication
 app.UseCors("AllowAngularApp");
 
+// Add Prometheus HTTP metrics middleware
+app.UseHttpMetrics();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 // Add company data isolation middleware
 app.UseMiddleware<CompanyDataIsolationMiddleware>();
+
+// Map Prometheus metrics endpoint
+app.MapPrometheusServer();
 
 app.MapControllers();
 
