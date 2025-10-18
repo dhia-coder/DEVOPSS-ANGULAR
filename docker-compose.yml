@@ -26,7 +26,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: PfeProject.API/Dockerfile
+      dockerfile: Dockerfile
     container_name: pfe-api
     ports:
       - "5288:8080"

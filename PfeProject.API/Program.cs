@@ -131,10 +131,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 
 // ===== 6. Prometheus Metrics Configuration =====
-builder.Services.AddPrometheusCounters();
-builder.Services.AddPrometheusHistograms();
-builder.Services.AddPrometheusGauges();
-builder.Services.AddPrometheusSummaries();
+// Prometheus metrics are automatically configured by prometheus-net.AspNetCore
 
 var app = builder.Build();
 
@@ -173,7 +170,7 @@ app.UseAuthorization();
 app.UseMiddleware<CompanyDataIsolationMiddleware>();
 
 // Map Prometheus metrics endpoint
-app.MapPrometheusServer();
+app.UseMetricServer();
 
 app.MapControllers();
 
